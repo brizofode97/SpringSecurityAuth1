@@ -1,0 +1,32 @@
+-Spring Security propose une méthode intitulée "formLogin()" qui permet de créer une page de
+ connexion par défaut.
+-"@Configuration" sur une classe permet à Spring de détecter que cette classe est
+ une classe de configuration et sera donc intancié et chargé dans le contexte Spring.
+-"@EnableWebSecurity" donne l'information que cette classe va permettre de configurer des éléments
+ de sécurité.
+-SecurityFilterChain est une interface fournit par Spring Security qui permet de modéliser une chqine de filtre de sécurité.
+-HttpSecurity est classe qui permet d'agir sur notre chaine de filter et de la manager.
+-"@Bean" permet de charger l'élément concerné dans le contexte de Spring. Dans notre cas, il charge l'objet résultant de la méthode.
+Spring Security posséde une configuration par défaut qui prend en compte :
+-//NOTE : Cache-Control: no-cache, no-store, max-age=0, must-revaidate :
+   empeche la souvegarde d'une copie cachée. Parce que aprés authentifiation, il peut avoir une copie cachée sauvegardé sur le navigateur.\
+-//NOTE : Pragma: no-cache
+-//NOTE : Expires: 0
+-//NOTE : X-Content-type-Options: nosniff
+  le signal nosniff  signifie qu’un utilisateur malveillant ne peut pas deviner le type de requête ni exécuter
+  une attaque XSS  (Cross-site scripting).
+-//NOTE : Strict-Transport-Security: max-age=31536000 ; includeSubDomains
+  garantit que toute personne qui tape une URL dans la barre de recherche est automatiquement dirigée vers la version HTTP du site web.
+-//NOTE : X-Frame-Options: DENY
+   de nombreux sites disposent d'iframes, qui permettent à un hacker de les pirater en ajoutant une URL à un serveur hébergeur malveillant,
+   en téléchargeant des fichiers sur votre navigateur et en accédant à votre ordinateur via des kits d’exploitation. Par exemple,
+   une victime de clickjacking se fait avoir en cliquant par accident sur une URL malveillante ! Le signal DENY  empêche ce type d’attaque.
+-//NOTE : X-XSS-Protection: 1; mode=block
+   mode=block empêche les JavaScript malveillants de s’exécuter sur votre site, ce qui prévient les attaques suspectes de type XSS.
+
+-La méthode "authorizeHttpRequests" de la classe "HttpSeurity" permet de créer un configuration pour spécifier des roles.
+-La méthode "requestMatches" permet de matcher une url avec un certain role.
+-La méthode "anyRequest().authenticated()" permetd de dire toutes les requetes seront authentifiées avant d'accéder à une route.
+-La classe "UserDetails" en Spring Security permet de modéliser utilisateur, donc un "UserDetailsService" permet de gérer des utilisateurs.
+-BCrypt est l’un des algorithmes d’encodage les plus reconnus en ce qui concerne les mots de passe.
+-"@Restontroller" sur un classe est pour dire que cette classe est considérée comme controller REST par Spring.

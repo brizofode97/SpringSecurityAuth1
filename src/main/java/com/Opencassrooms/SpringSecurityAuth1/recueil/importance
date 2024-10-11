@@ -1,0 +1,46 @@
+Les attaques sur les applications Web : piratage informatique des données, l'injection de code SQL, ect
+Le complexe Hotelier Mariott a été victime de l'un des piratages informatiques des données les plus importants de l'histoire avec
+500 millions de clients affectés et une perte de 3 millions de dollars. Yahoo et Equifax ont été aussi victimes du piratage informatiques
+des données.Il faut s'assurer de la fibialité des frameworks et les dépendances(plug-in,libraries et autres) que l'on utilise.
+OWASP définit un Top 10 des attaques visant les applications web.
+Différence entre Spring, Spring Boot, Spring MVC, RESTful API ou monopage.
+Spring Security repose sur trois conceptes :
+-Le pare-feu(firewall) : il permet de s'assurer que seules les requetes autorisées peuvent passer à travers les filtres
+et atteindre les couches de l'applcation. Spring Security utilise un composant appelé "HttpFirewall" qui est chargé de vérifier
+et d'empecher les requetes HTTP malveillants ou invalides.
+Par exemple, il peut bloquer : des requetes contenant des caracteres interdits ou des tentatives de traversée de répertoire (../)
+ou des tentatives d'injections via des URL malformées.
+-Le proxy :
+ 1- Proxy d'autorisation : Utilisé pour entourer les objets sensibles, permettant de vérifier dynamiquement les permissions et sécuriser
+    l'accès aux ressources/méthodes. Souvent on utilise "@PreAuthorize" ou @Secured.
+ 2-Proxy DelegatingFilterProxy : il opère dans le cycle de vie des requetes HTTP. Il permet de transporter une requete entrante vers
+   la chaine de filtre concernant.
+-Les chaines de filtres(filter chain) : une chaine de filtre est une serie de filtres Servlet qui intercepte chaque requete entrante
+pour garantir que chaque requete passe les étapes de validation et de sécurité nécessaire avant d'atteindre le controller.
+Dans Java, un servlet est un programme qui fonctionne sur une applicaion Web pour traiter des requetes HTTP entrantes.
+Un filtre Servlet est un composant qui peut agir en amount sur la requete reçue par le ou les servlets concernés par le filtre en question.
+On a trois dépendances :
+-Spring Web : permet d'implémenter des applications(autrement dit on peut traiter des requetes HTTP et renvoyer des reponses HTTP);
+-SpringSecurity : permet d'impémenter la couche de sécurité (tant l'authentification que l'authorisation);
+-OAuth2 : permet d'utiliser le protocole de OAuth2 avec Spring Security
+-La hiéarchie des dépendances exitent en Spring Boot, qui dit que certaines dépendances doit précéder d'autres comme exemple OAUth2 suivi de
+Spring Security et suivi Spring Web.
+Les deux fonctionnalités de sécurisation sont : l'authentification vérifie qui vous etes et
+l'autorisation vérifie ce que vous pouvez faire. C'est deux constitue le controe d'accés.
+Il existe deux formes d'authentification : l'authentification à facteur unique et l'authentification à facteurs multiples.
+Les types d'authentification en Spring Security :
+ -Par Session: Dans l’authentification par session, les utilisateurs se connectent d’abord grâce à leurs identifiants.
+    Ils sont alors authentifiés et commencent une session. Une session représente la période entre la connexion et la déconnexion
+    de l’utilisateur. Le serveur sauvegarde les informations de session de l’utilisateur, et écrit une copie de ces informations
+    dans un petit fichier (un cookie), également sauvegardé dans le navigateur de l’utilisateur. Ces informations contiennent généralement les identifiants de l’utilisateur, la durée de la session et un numéro de session. Chaque fois que l’utilisateur envoie une requête via l’application web, le serveur consulte le cookie pour s’assurer que les identifiants de la session correspondent à ceux du serveur, et sont encore valides.
+ -Par token
+    Dans le cadre de l'authentification par token, l’utilisateur s'authentifie sur le serveur, et ce dernier écrit les informations
+    de la session dans un petit fichier (un token) pour effectuer la sauvegarde uniquement sur le navigateur ou l’ordinateur de
+    l’utilisateur. Un token a la même fonction qu’un cookie, mais ces deux processus présentent tout de même des différences
+    significatives. Une authentification par session avec cookie sauvegarde les identifiants sur le serveur et sur le navigateur de
+    l’utilisateur. Tandis que lors d’une authentification par token, un token web JSON (JWT) dispose déjà des informations nécessaires
+    pour valider l’utilisateur ; ainsi, il n’est pas nécessaire de sauvegarder les informations de la session sur le serveur.
+    En cela, cette authentification est qualifiée comme étant sans état (en anglais Stateless).
+Le Token Web JSON(jwt) est un objet JavaScrit qui encode et transmet les informations d'authentification.
+Le controle d'accés basé sur les roles permet de controler l'accés à certaines parties de l'application en fonction des roles des
+personnes.
