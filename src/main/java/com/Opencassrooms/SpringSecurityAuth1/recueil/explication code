@@ -27,6 +27,40 @@ Spring Security posséde une configuration par défaut qui prend en compte :
 -La méthode "authorizeHttpRequests" de la classe "HttpSeurity" permet de créer un configuration pour spécifier des roles.
 -La méthode "requestMatches" permet de matcher une url avec un certain role.
 -La méthode "anyRequest().authenticated()" permetd de dire toutes les requetes seront authentifiées avant d'accéder à une route.
--La classe "UserDetails" en Spring Security permet de modéliser utilisateur, donc un "UserDetailsService" permet de gérer des utilisateurs.
+-L'interface "UserDetails" en Spring Security permet de modéliser utilisateur et l'interface "UserDetailsService" permet de gérer des
+utilisateurs.
 -BCrypt est l’un des algorithmes d’encodage les plus reconnus en ce qui concerne les mots de passe.
 -"@Restontroller" sur un classe est pour dire que cette classe est considérée comme controller REST par Spring.
+-La méthode "loadByUserUsername" de l'interface "UserDetailsService" permet de récupérer les informations d'un utilisateur dans la base de
+ données et ensuite créer un utilisateur compréhensible par Spring Security afin de permettre Spring Security de faire son mécanisme
+ d'authentification et d'autorisation.
+En résumé, pour gérer l'authentification des utilisateurs en base de données avec Spring Security, on doit implémenter une classe qui
+implémente l'interface "UserDetailsService" et ensuite l'indiquer à Spring Security dans le fichier "SpringSecurityConfig" grace à
+l'interface "AuthentificationManager".
+-Utilisation de OAuth 2.0 dans GitHub :
+Pour cela, on a besoin de nous identifier sur gitHub et enregistrer notre compte à une qpplicqtion OAuth 2.0 avec un client id
+et un client secret dans la partie Oauthorisation de GitHub.
+Ensuite, on enregistre ces identifiant dans notre project(partie application.properties).
+
+//IMPORTANT : Exploration de la classe Principal User
+"Principal" est une interface qui représente un utilisateur envoyé depuis le serveur. Les informations que nous envoie cette interface lors de l'utilisation
+OAuth 2.0 est cce qu'on appelle; Ceux sont les informations que possède le client(OpenClassroom). Un "StringBuffer" est un objet Java qui
+permet de manipuler des chaines de caractères.
+-La différence entre "Map" et "HashMap", "List" et "Set"
+Spring Security posséde une interface "OidcUser" qui permet d'appliquer le principe de l'OIDC afin d'avoir des informations plus poussées sur
+l'utilisateur connecté. Grace à la méthode "getIdToken()" de l'interface "OidcUser", on peut trouver les claims avec la méthode
+"getClaims" sur la méthode "getIdToken()" et l'idToken avec "getTokenvalue" sur la méthode "getIdToken()".
+-JUnit est la librairie teste de Java. Avec les dépendances "spring-boot-starter-test" et "spring-security-test" on a recours
+à des librairies spécialement conçues pour Spring Boot et Spring Security, en utilisant les librairies tests JUnit de java.
+-L'annotation "@SpringBootTest" sur une classe teste permet, lors du démarrage du teste, de charger le contexte de Spring(IoC) donc
+tous les "Bean" associés à Spring seront chargés. L'annotation "@Test" sur la méthode "contextLoads()" sera exécuté lors de l'exécution
+des tests. Lors des testes en Spring Boot, il faut utiliser l'annotation "@Autowired" pour la gestion de dépendance parce que pour
+l'exécution des testes, "JUnit" ne possède pas de "ParameterResolver" pour injecter.
+On peut vérifier en mode test si une classe est disponible lors du démarrage du projet en utilisant
+"assertThat(objetParinjection).isNotNull()".
+L'annotation "@AutoConfigurationMockMvc" permet de simuler l'application ainsi d'envoyer des requetes Http comme si l'application Web est
+opérationnelle. C'est la classe MockMvc avec sa méthode "perfom" qui permet de faire les requetes lors de la simulation.
+L'annotation "WithMockUser" sur un méthode permet d'ajouter un utilisateur dans la sécurité pour dire comme si on s'est authentifié,
+ce qui permet de lancer des requetes sur des endpoints sécurisés.
+
+//NOTE: Sécuriser une API avec JWT

@@ -44,3 +44,51 @@ Les types d'authentification en Spring Security :
 Le Token Web JSON(jwt) est un objet JavaScrit qui encode et transmet les informations d'authentification.
 Le controle d'accés basé sur les roles permet de controler l'accés à certaines parties de l'application en fonction des roles des
 personnes.
+
+//NOTE : Explication sur OAuth2
+OAuth est un protocole d’autorisation permettant une connexion sécurisée, en utilisant des tokens d’encodage sans état pour
+sécuriser les sessions des utilisateurs sur une application web. OAuth permet à l’utilisateur et au serveur qui gère la connexion,
+par exemple Google, d'autoriser l’utilisation de certaines informations par l’application.
+A cause des voles de données sur les bases d'informations, certaines applications déléguent leur authentifiation aux fournisseurs
+d'identité commme facebook, google, ect.
+Prenons l'exemple de OpenClassrom pour expliquer le processus :
+-On peut permettre à un utilisateur d'openClassroom de se connecte en passant par facebook.
+-Une fois que l'utilisateur s'identifie sur facebook avec son email et mot de passe.
+-OAuth demande à l'utilisateur s'il accepte de fournir certains informations à OpenClassroom.
+-S'il accepte, OpenClassroom va recevoir un code d'authorisation qu'il renvoie au serveur d'authorisation de facebook.
+-Ensuite, le serveur d'authorisation de facebook lui renvoie un token d'accés ou clé plubic qui lui permet de se connecter
+directement au seveur de Facebook(serveur des ressoures).
+-Ainsi si le serveur de facebook s'assure que ce token d'accés vient réellement du serveur d'autorisation de facebook alors la connexion
+est vaidée. En fait le serveur d'API de Facebook(serveur des ressources) vérifie les informations du token d'accés.
+Bien vrai que OAuth nous a permis de nous authentifié mais la liste des authorisations d'accés aux information est trés
+limité. Pour avoir à un certain nombre d'information comme email ou numéro de téléphone, on utilise OIDC(Open ID Connect).
+OIDC est une extension de OAuth. Ce système va faire une requete supplémentaire sur le serveur d'authorisation de facebook pour obtenir un
+token d'indenté qui va contenir les information souhaité. IdP(Identity Provider) est un acronyme qui signifie fournisseur d'identité.
+N.B. : Le token d'accés détient les information d'autorisation de facebook. Le token d'accés contient duex éléments : le principale
+  contenant les information de l'utilisateur et un objet authorities contenant les informations permises pour le site Web client
+  (OpenClassroom).
+OAuth 2.0 permet l'autorisation(entrer dans le site) et OIDC permet l'authentification qui vous etes.
+
+//NOTE: Vu sur les tests de notre applications
+Lorsqu'on fait des tests sur notre application, deux types de bugs peuvent etre identifiés :
+-Evident: on construit l'application mais ça ne compile pas. Ceux-ci peut etre du par une mauvaise syntaxe, ou une méthode manquante
+ quelque part, ect.
+-Insidieux: l'application construite compile correctement mais donne pas le résultat attendu.
+Pour résoudre ces bugs, on utilise "Subcutaneous testing" en anglais, qui permet de tester de bout à bout une fonctionnalité spécifiqueou
+un méthode, au lieu de tester l'application en intégralité. Le dossier "src/test/java" est le dossier qui contient les classes test.
+
+//NOTE: Personnaisation de page d'erreur avec Spring Security
+La perfonnalisation des erreurs avec Spring Security est un moyen de sécurité de notre application pour ne pas donner trop d'information
+à un hacker à partir du message d'erreur. Au lieu, de laisser le système l'envoyer un message précis pour lui indiquer le problème,
+on peut l'intercepter et changer le message. Par cela, on crée un dossier "error" sur le dossier "src/ressources/static" et créé des
+pages HTML pour chaque cas d'erreur.
+N.B. : Le mécanisme de gestion d’exceptions de Spring Security utilise des codes d’erreur spécifiques, dont les hackers peuvent se servir
+pour viser certaines librairies utilisées ! Plus les hackers auront du mal à construire leur attaque à l'encontre de votre application web,
+plus ils se décourageront et chercheront une application moins sécurisée.
+Spring Security cherche d'abord les pages d'erreurs personnaliés par le code d'erreur avant d'appeller sa page par défaut.
+
+//NOTE: Sécuriser une API avec JWT
+Une API Rest est à caractère sans état(stateless); ce qui veut dire d'une requete à l'autre, on ne conserve pas d'état, autrement dit pas
+d'information sur le serveur. Vu le contexte, l'authentiation par session est à éviter, donc on adapte l'authentification par jeton(token
+authentification). refresh token = jeton d'actuaisation.
+
