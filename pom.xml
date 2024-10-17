@@ -82,6 +82,15 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
+		<!--This dependency is used to automatically load variables from the env file.-->
+		<!-- https://mvnrepository.com/artifact/me.paulschwarz/spring-dotenv -->
+		<dependency>
+			<groupId>me.paulschwarz</groupId>
+			<artifactId>spring-dotenv</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
